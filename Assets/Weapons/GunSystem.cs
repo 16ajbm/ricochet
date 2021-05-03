@@ -32,57 +32,61 @@ public class GunSystem : MonoBehaviour
     }
     private void Update()
     {
-        MyInput();
+        if (Input.GetButtonDown("Fire1")) {
+            this.Shoot();
+        }
+        
+        
+        
+      
+        //MyInput(); // not my input, garbage name
 
         //SetTextt
         //text.SetText(bulletsLeft + " / " + magazineSize);
     }
-    private void MyInput()
-{
-    if (allowButtonHold)shooting = Input.GetKey(KeyCode.Mouse0);
-    else shooting = Input.GetKeyDown(KeyCode.Mouse0);
-
-    if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
-
-    //Shoot
-    if (readyToShoot && shooting && !reloading && bulletsLeft > 0)
-        bulletsShot = bulletsPerTap;
-        Shoot();
-}
+    
     private void Shoot()
     {
-        readyToShoot = false;
+        //readyToShoot = false;
+
+        RaycastHit objHit; // stores info about hit
 
         //Spread
-        float x = Random.Range(-spread, spread);
-        float y = Random.Range(-spread, spread);
+        //float x = Random.Range(-spread, spread);
+        //float y = Random.Range(-spread, spread);
 
         //Calculate Direction with Spread
-        Vector3 direction = fpsCam.transform.forward + new Vector3(x, y, 0);
+        //Vector3 spreadDir = fpsCam.transform.forward + new Vector3(x, y, 0);
 
-        //RayCast
-        if (Physics.Raycast(fpsCam.transform.position, direction, out rayHit, range, whatIsEnemy))
-        {
-            Debug.Log(rayHit.collider.name);
-
+        if (Physics.Raycast(fpsCam.transform.position,fpsCam.transform.forward, out objHit, range)) {
+            // bullet collision... calc damage, etc.
+            Debug.Log(objHit.transform.name);
             //if (rayHit.collider.CompareTag("Enemy"))
             //rayHit.collider.GetComponent<ShootingAi>().TakeDamage(damage);
+            Target target = objHit.transform.GetComponent<Target>();
+            if (target != null) {
+                target.TakeDamage(10.0f);
+            }
         }
+
+        bulletsLeft--;
+        bulletsShot++;
+
+
 
         //ShakeCamera
         //camShake.Shake(camShakeDuration, camShakeMagnitude);
 
-        //Graphics
-        Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
-        Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
+        //Graphics <- what you doing with quaternions, my guy?
+        //Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
+        //Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
 
-        bulletsLeft--;
-        bulletsShot--;
+        
 
-        Invoke("ResetShot", rof);
+        //Invoke("ResetShot", rof);
 
-        if(bulletsShot > 0 && bulletsLeft > 0)
-        Invoke("Shoot", timeBetweenShots);
+        //if(bulletsShot > 0 && bulletsLeft > 0)
+        //    Invoke("Shoot", timeBetweenShots);
     }
         private void ResetShoot()
     {
@@ -102,3 +106,24 @@ public class GunSystem : MonoBehaviour
         reloading = false;
     }
 }
+
+
+
+
+/*
+if (allowButtonHold)
+        shooting = Input.GetKey(KeyCode.Mouse0);
+    else 
+        shooting = Input.GetKeyDown(KeyCode.Mouse0);
+
+    if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) 
+        Reload();
+
+    //Shoot
+    if (readyToShoot && shooting && !reloading && bulletsLeft > 0)
+        bulletsShot = bulletsPerTap; // weird way to do this
+        Shoot();
+        
+        
+
+*/
