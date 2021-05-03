@@ -1,2 +1,2 @@
 # RICOCH3T
-Game development learning project.
+Two brothers attempting to develop a game.
