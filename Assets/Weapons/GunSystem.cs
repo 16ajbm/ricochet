@@ -19,6 +19,8 @@ public class GunSystem : MonoBehaviour
     public RaycastHit rayHit;
     public LayerMask whatIsEnemy;
 
+    public ParticleSystem bulletStream;
+
     //Graphics
     public GameObject muzzleFlash, bulletHoleGraphic;
     //public TextMeshProUGUI text;
@@ -49,6 +51,7 @@ public class GunSystem : MonoBehaviour
     {
         //readyToShoot = false;
 
+        bulletStream.Play();
         RaycastHit objHit; // stores info about hit
 
         //Spread

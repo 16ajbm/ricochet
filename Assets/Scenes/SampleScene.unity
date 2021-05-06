@@ -1006,6 +1006,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -462981019419857548, guid: 98d6271743b83cd4a95fee40f1372897, type: 3}
+--- !u!198 &1940432736 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8538577854071928978, guid: c81fe755048fbf8479e208df406dd1f6, type: 3}
+  m_PrefabInstance: {fileID: 7684142816168712309}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1965251139
 GameObject:
   m_ObjectHideFlags: 0
@@ -6041,6 +6046,7 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 4294967295
+  bulletStream: {fileID: 1940432736}
   muzzleFlash: {fileID: 100904441861072407}
   bulletHoleGraphic: {fileID: 7122590036922179253}
 --- !u!1 &1582813067266047348
